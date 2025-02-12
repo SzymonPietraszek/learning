@@ -5,7 +5,11 @@ import (
 )
 
 func main() {
+	// change tree type
+	// -----------------
 	tree := NewBST()
+	// tree := NewAVL()
+	// -----------------
 
 	fmt.Println("Empty tree print")
 	tree.Print()

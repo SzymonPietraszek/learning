@@ -1,9 +1,14 @@
 from bst import BST
+from avl import AVL
 
 if __name__ != "__main__":
     quit()
 
+# change tree type
+#  -----------------
 tree = BST()
+# tree = AVL()
+# -----------------
 
 
 print("Empty tree print")
