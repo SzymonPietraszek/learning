@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mount-watching
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mount-watching
+  template:
+    metadata:
+      labels:
+        app: mount-watching
+      annotations:
+        data-from-annotation: first
+    spec:
+      containers:
+      - image: docker.io/library/mount-watching-image
+        name: mount-watching
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+        - mountPath: /etc/secret-folder
+          name: secret-resource
+          readOnly: true
+        - mountPath: /etc/configmap-folder
+          name: configmap-resource
+        - mountPath: /etc/annotations
+          name: annotations
+      volumes:
+      - name: secret-resource
+        secret:
+          secretName: secret-resource
+      - name: configmap-resource
+        configMap:
+          name: configmap-resource
+      - name: annotations
+        downwardAPI:
+          items:
+            - path: "annotations-file"
+              fieldRef:
+                fieldPath: metadata.annotations['data-from-annotation']
