@@ -1,17 +1,4 @@
-NUM_OF_CHARS_PER_VALUE = 2
-
-
-class Node:
-	def __init__(self, value: int, parent=None):
-		self.value: int = value
-		self.parent: Node = parent
-		self.left: Node = None
-		self.right: Node = None
-
-	def __str__(self) -> str:
-		return str(self.value).rjust(NUM_OF_CHARS_PER_VALUE, " ") if self\
-				else '.' * NUM_OF_CHARS_PER_VALUE
-
+from node import Node, NUM_OF_CHARS_PER_VALUE
 
 class BST:
 	def __init__(self):
@@ -90,9 +77,9 @@ class BST:
 
 		while not all(n is None for n in layers[-1]):
 			values.append([str(n.value) if n else "." * NUM_OF_CHARS_PER_VALUE
-							for n in layers[-1]])
+						   for n in layers[-1]])
 			layers.append([m for n in layers[-1] for m in
-							([n.left, n.right] if n else [None, None])])
+						   ([n.left, n.right] if n else [None, None])])
 			sep.append(sep[-1]*NUM_OF_CHARS_PER_VALUE + NUM_OF_CHARS_PER_VALUE)
 
 		for i, values in enumerate(values):
