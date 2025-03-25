@@ -6,6 +6,7 @@ Algorithms and data structures (go and py folders):
 - merge sort [wiki](https://en.wikipedia.org/wiki/Merge_sort)
 - binary search tree [wiki](https://en.wikipedia.org/wiki/Binary_search_tree)
 - AVL tree [wiki](https://en.wikipedia.org/wiki/AVL_tree)
+- tree traversal [wiki](https://en.wikipedia.org/wiki/Tree_traversal)
 
 Kubernetes (k8s folder):
 - mount reloader is an example of how to react to mounted file changes.

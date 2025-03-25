@@ -6,28 +6,6 @@ import (
 	"strings"
 )
 
-const numOfCharsPerValue = 2
-
-type Node struct {
-	value               int
-	parent, left, right *Node
-}
-
-func (n *Node) String() string {
-	return getWithNil(n, strings.Repeat(".", numOfCharsPerValue),
-		func(n *Node) string { return fmt.Sprintf("%*d", numOfCharsPerValue, n.value) })
-}
-
-func (n *Node) v() int   { return getWithNil(n, 0, func(n *Node) int { return n.value }) }
-func (n *Node) l() *Node { return getWithNil(n, nil, func(n *Node) *Node { return n.left }) }
-func (n *Node) r() *Node { return getWithNil(n, nil, func(n *Node) *Node { return n.right }) }
-func getWithNil[T string | int | *Node](n *Node, defVal T, f func(*Node) T) T {
-	if n == nil {
-		return defVal
-	}
-	return f(n)
-}
-
 type BST struct {
 	root *Node
 }

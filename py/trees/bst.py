@@ -85,3 +85,23 @@ class BST:
 		for i, values in enumerate(values):
 			print(" "*sep[-3 - i], sep="", end="")
 			print((" "*sep[-2 - i]).join(values))
+
+def test_tree(tree: BST):
+	print("Empty tree print")
+	tree.print()
+	print(f"Empty tree search {tree.search(0)}")
+	tree.delete(0)
+	print("Empty tree delete")
+
+	for i in [60, 40, 30, 70, 80, 50, 10, 20]:
+		print(f"insert({i})")
+		tree.insert(i)
+		tree.print()
+
+	for i in [30, 60, 50, 90]:
+		print(f"search({i}): {tree.search(i)}")
+
+	for i in [30, 50, 70, 60]:
+		print(f"delete({i})")
+		tree.delete(i)
+		tree.print()

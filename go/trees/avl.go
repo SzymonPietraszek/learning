@@ -11,17 +11,18 @@ func NewAVL() *AVL {
 	return &AVL{heights: map[int]int{}}
 }
 
-func (a *AVL) Insert(val int) {
-	p := a.BST.Insert(val)
-	a.fixHeights(p)
+func (a *AVL) Insert(val int) *Node {
+	inserted := a.BST.Insert(val)
+	a.fixHeights(inserted)
 
 	var c, cc *Node = nil, nil
-	for ; p != nil; p, c, cc = p.parent, p, c {
+	for p := inserted; p != nil; p, c, cc = p.parent, p, c {
 		if a.isUnbalanced(p) {
 			a.balance(p, c, cc)
 			break
 		}
 	}
+	return inserted
 }
 
 func (a *AVL) Delete(val int) *Node {
