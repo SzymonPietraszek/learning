@@ -25,17 +25,50 @@ def traverse_inorder(n: Node):
 
 # root left right
 def traverse_preorder(n: Node):
+    ret = []
     q = deque([n])
     while q:
         n = q.popleft()
-        print(n.val)
+        ret.append(n.val)
         if n.left:
             q.append(n.left)
         if n.right:
             q.append(n.right)
+    return ret
+
+
+# left right root
+def traverse_postorder(n: Node):
+    ret = []
+    s = []
+    visited = []
+    while True:
+        if n.left and n.left not in visited:
+            s.append(n)
+            n = n.left
+            continue
+        if n.right and n.right not in visited:
+            s.append(n)
+            n = n.right
+            continue
+
+        ret.append(n.val)
+        visited.append(n)
+        if s:
+            n = s.pop()
+        else:
+            break
+    return ret
 
 
 bst = Node(4, Node(2, Node(1), Node(3)), Node(5, None, Node(6)))
 
-print("traverse inorder ", traverse_inorder(bst))
-print("traverse preorder", traverse_preorder(bst))
+print("tree:")
+print("     4")
+print("   /   \\")
+print("  2     5")
+print(" / \\     \\")
+print("1   3     6")
+print("traverse inorder  ", traverse_inorder(bst))
+print("traverse preorder ", traverse_preorder(bst))
+print("traverse postorder", traverse_postorder(bst))
