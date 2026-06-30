@@ -61,6 +61,26 @@ def traverse_postorder(n: Node):
     return ret
 
 
+def traverse_postorder_smart(n: Node):
+    ret = []
+    s = []
+    v = None
+    while s or n:
+        if n:
+            s.append(n)
+            n = n.left
+            continue
+        t = s[-1]
+        if t.right and not v == t.right:
+            n = t.right
+            continue
+        n = s.pop()
+        ret.append(n.val)
+        v = n
+        n = None
+    return ret
+
+
 bst = Node(4, Node(2, Node(1), Node(3)), Node(5, None, Node(6)))
 
 print("tree:")
@@ -72,3 +92,4 @@ print("1   3     6")
 print("traverse inorder  ", traverse_inorder(bst))
 print("traverse preorder ", traverse_preorder(bst))
 print("traverse postorder", traverse_postorder(bst))
+print("postorder smarter ", traverse_postorder_smart(bst))
