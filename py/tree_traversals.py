@@ -1,6 +1,3 @@
-from collections import deque
-
-
 class Node:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
@@ -26,14 +23,15 @@ def traverse_inorder(n: Node):
 # root left right
 def traverse_preorder(n: Node):
     ret = []
-    q = deque([n])
-    while q:
-        n = q.popleft()
-        ret.append(n.val)
-        if n.left:
-            q.append(n.left)
-        if n.right:
-            q.append(n.right)
+    s = []
+    while s or n:
+        if n:
+            ret.append(n.val)
+            s.append(n.right)
+            n = n.left
+        else:
+            n = s.pop()
+
     return ret
 
 
@@ -41,43 +39,33 @@ def traverse_preorder(n: Node):
 def traverse_postorder(n: Node):
     ret = []
     s = []
-    visited = []
-    while True:
-        if n.left and n.left not in visited:
-            s.append(n)
-            n = n.left
-            continue
-        if n.right and n.right not in visited:
-            s.append(n)
-            n = n.right
-            continue
-
-        ret.append(n.val)
-        visited.append(n)
-        if s:
-            n = s.pop()
-        else:
-            break
-    return ret
-
-
-def traverse_postorder_smart(n: Node):
-    ret = []
-    s = []
-    v = None
+    prev = None
     while s or n:
         if n:
             s.append(n)
             n = n.left
             continue
-        t = s[-1]
-        if t.right and not v == t.right:
-            n = t.right
+        p = s[-1]
+        if p.right and p.right != prev:
+            n = p.right
             continue
         n = s.pop()
         ret.append(n.val)
-        v = n
+        prev = n
         n = None
+    return ret
+
+
+def bfs(n: Node):
+    ret = []
+    q = [n]
+    while q:
+        n = q[0]
+        q = q[1:]
+        if n:
+            ret.append(n.val)
+            q.append(n.left)
+            q.append(n.right)
     return ret
 
 
@@ -89,7 +77,7 @@ print("   /   \\")
 print("  2     5")
 print(" / \\     \\")
 print("1   3     6")
-print("traverse inorder  ", traverse_inorder(bst))
-print("traverse preorder ", traverse_preorder(bst))
-print("traverse postorder", traverse_postorder(bst))
-print("postorder smarter ", traverse_postorder_smart(bst))
+print("DFS inorder  ", traverse_inorder(bst))
+print("DFS preorder ", traverse_preorder(bst))
+print("DFS postorder", traverse_postorder(bst))
+print("BFS          ", bfs(bst))
