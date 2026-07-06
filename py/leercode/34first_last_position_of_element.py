@@ -37,42 +37,32 @@ class Solution(object):
         """
         if not nums:
             return [-1, -1]
-
+        ll = -1
         l, r = 0, len(nums) - 1
-        pivot = l if nums[l] == target else r if nums[r] == target else -1
-        while pivot < 0 and l <= r:
+        rr = r
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] < target:
+                l = m + 1
+            elif nums[m] >= target:
+                if nums[m] == target:
+                    ll = m
+                else:
+                    rr = m
+                r = m - 1
+
+        if ll == -1:
+            return [-1, -1]
+
+        l, r = ll, rr
+        while l <= r:
             m = (l + r) // 2
             if nums[m] == target:
-                pivot = m
-                break
-            if nums[m] < target:
+                rr = m
                 l = m + 1
-            else:
-                r = m - 1
-        if pivot == -1:
-            return [-1, -1]
-        ll, rr = l, r
-        l, r = ll, pivot
-        while l <= r:
-            m = (l + r) // 2
-            if nums[m] == target and (m == 0 or nums[m - 1] != target):
-                ll = m
-                break
-            if nums[m] < target:
-                l = m + 1
-            else:
+            elif nums[m] > target:
                 r = m - 1
 
-        l, r = pivot, rr
-        while l <= r:
-            m = (l + r) // 2
-            if nums[m] == target and (m == len(nums) - 1 or nums[m + 1] != target):
-                rr = m
-                break
-            if nums[m] > target:
-                r = m - 1
-            else:
-                l = m + 1
         return [ll, rr]
 
 
