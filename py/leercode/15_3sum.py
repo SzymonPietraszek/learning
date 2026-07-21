@@ -46,16 +46,18 @@ class Solution:
             l, r = i + 1, len(nums) - 1
             target = -1 * i_val
             while l < r:
-                s = nums[l] + nums[r]
+                l_val, r_val = nums[l], nums[r]
+                s = l_val + r_val
                 if s == target:
-                    ret.append([i_val, nums[l], nums[r]])
+                    ret.append([i_val, l_val, r_val])
+                if s <= target:
                     l += 1
-                    while l < r and nums[l] == nums[l - 1]:
+                    while l < r and nums[l] == l_val:
                         l += 1
-                elif s < target:
-                    l += 1
-                else:
+                if s >= target:
                     r -= 1
+                    while l < r and nums[r] == r_val:
+                        r -= 1
             prev_i_val = i_val
 
         return ret
